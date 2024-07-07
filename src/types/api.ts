@@ -1,4 +1,4 @@
-import { Product, Order, Catalog } from './index';
+import { Product, Order } from './index';
 
 export interface OrderResult {
 	id: string;
@@ -10,9 +10,7 @@ export interface ResponseError {
 }
 
 export interface ILarekApi {
-	getProducts(): Promise<Catalog>;
+	getProducts(): Promise<Product[] | ResponseError>;
 
-	getItem(id: string): Promise<Product | ResponseError>;
-
-	order(order: Order): Promise<OrderResult | ResponseError>;
+	sendOrder(order: Order): Promise<OrderResult | ResponseError>;
 }

@@ -7,11 +7,6 @@ export interface Product {
 	price: number;
 }
 
-export interface Catalog {
-	total: number; // total number of products
-	items: Product[];
-}
-
 export interface Cart {
 	items: Product[];
 	total: number; // total price of products
@@ -27,10 +22,7 @@ interface Contacts {
 	phone: string;
 }
 
-export interface Order extends Payments, Contacts {
-	total: number;
-	items: string[];
-}
+export interface Order extends Payments, Contacts {}
 
 export enum AppModals {
 	item = 'modalitem',
@@ -41,9 +33,9 @@ export enum AppModals {
 }
 
 export interface AppState {
-	catalog?: Catalog;
-	cart?: Cart;
-	order?: Order;
+	catalog: Product[];
+	cart: Cart;
+	order: Order;
 	selectedItem?: string;
 	openedModal: AppModals;
 	isLoading: boolean;
