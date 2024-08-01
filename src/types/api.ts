@@ -1,16 +1,26 @@
-import { Product, Order } from './index';
+import { IProduct, IOrder } from './index';
 
-export interface OrderResult {
+export interface IOrderResult {
 	id: string;
 	total: number;
 }
 
-export interface ResponseError {
+export interface IResponseError {
 	error: string;
 }
 
-export interface ILarekApi {
-	getProducts(): Promise<Product[] | ResponseError>;
+/**
+ * Интерфейс для работы с API ларька.
+ * Предоставляет методы для получения продуктов, конкретного продукта и отправки заказа.
+ */
 
-	sendOrder(order: Order): Promise<OrderResult | ResponseError>;
+export interface ILarekApi {
+	// Получение списка продуктов.
+	getProducts(): Promise<IProduct[] | IResponseError>;
+
+	// Получение конкретного продукта по его идентификатору.
+	getProduct(id: string): Promise<IProduct | IResponseError>;
+
+	// Отправка заказа.
+	sendOrder(order: IOrder): Promise<IOrderResult | IResponseError>;
 }

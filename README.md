@@ -78,12 +78,17 @@ yarn build
 * trigger: Возвращает функцию-триггер, генерирующую событие при вызове.
 
 События, которые будет обрабатывать класс EventEmitter:
-* product-add-to-basket - генерируется при добавлении товара в корзину
-* product-remove-from-basket - генерируется при удалении товара из корзины
-* order-send - генерируется при отправке заказа на сервер
-* form-validate - генерируется при валидации формы
-* form-data-get - генерируется при получении данных из формы.
 
+* catalog:changed - генерируется при изменении каталога приложения. Содержит массив объектов с информацией о карточках
+* card:select - генерируется при открытии модалки карточки
+* card:changed - генерируется при добавлении товара в корзину
+* basket:open - генерируется при открытии корзины
+* basket:changed - генерируется при редактировании корзины
+* order:open - генерируется при переходе на форму заказа
+* order:submit - генерируется при переходе на форму контактов
+* contacts:submit - генерируется при отправке заказа
+* modal:open - генерируется при открытии модалки
+* modal:close - генерируется при закрытии модалки
 
 ### 3. Класс Api
 Класс Api базовый класс для работы с API
@@ -99,51 +104,39 @@ yarn build
 ### 4. Класс Page
 Класс Page наследуется от класса Component и отвечает за отображение страницы. Конструктор класса Page принимает следующие параметры:
 
-* contentElement - элемент DOM, в котором будет размещено представление (тип: HTMLElement)
-* eventEmitter - экземпляр класса EventEmitter, отвечающий за обмен событиями между компонентами (тип: EventEmitter)
-
 Содержит следующие методы:
-* render - отвечает за отображение страницы
+* catalog - отвечает за отображение каталога
+* locked - отвечает за блокировку каталога
+* basketCounter - отвечает за отображение количества продуктов в корзине
 
 
 ### 5. Класс Card
 Класс Card наследуется от класса Component и отвечает за отображение карточки товара. Конструктор класса Card принимает следующие параметры:
 
-* contentElement - элемент DOM, в котором будет размещено представление (тип: HTMLElement)
-* eventEmitter - экземпляр класса EventEmitter, отвечающий за обмен событиями между компонентами (тип: EventEmitter)
-* type - тип отображаемой карточки
-* id - номер продукты
-* description - описание
-* image - картинка
-* title - заголовок
-* category - категория
-* price - цена
-
 Содержит следующие методы:
-* render - отвечает за отображение карточки товара
+* title - отвечает за отображение заголовка карточки
+* price - отвечает за отображение цены карточки
+* button - отвечает за отображение кнопки карточки
+* image - отвечает за отображение изображения карточки
+* description - отвечает за отображение описания карточки
 
 
 ### 6. Класс Modal
 Класс Modal наследуется от класса Component и отвечает за отображение модального окна. Конструктор класса Modal принимает следующие параметры:
 
-* contentElement - поле класса для хранения элемента разметки для отображения контента
-* closeButtonElement - поле класса для хранения и возможности настройки взаимодействия с кнопкой закрытия.
-
 Содержит следующие методы:
-* render - отвечает за отображение модального окна
 * open - открывает модальное окно
 * close - закрывает модальное окно
+* render - отвечает за отображение модального окна
 
 
 ### 7. Класс Basket
 Класс Basket наследуется от класса Component и отвечает за отображение корзины. Конструктор класса Basket принимает следующие параметры:
 
-* contentElement - элемент DOM, в котором будет размещено представление (тип: HTMLElement)
-* eventEmitter - экземпляр класса EventEmitter, отвечающий за обмен событиями между компонентами (тип: EventEmitter)
-* items - Список продуктов в корзине
-
 Содержит следующие методы:
-* render - отвечает за отображение корзины
+* items - отвечает за отображение карточек в корзине
+* total - отвечает за отображение общей стоимости
+* submitButtonLock - отвечает за блокировку кнопки оформления заказа
 
 
 ### 8. Класс Form
@@ -156,59 +149,46 @@ yarn build
 * render - отвечает за отображение формы
 
 
-### 9. Класс Order
+### 9. Класс OrderForm
 Класс Order наследуется от класса Component и отвечает за отображение формы оформления заказа. Конструктор класса Order принимает следующие параметры:
 
-* contentElement - элемент DOM, в котором будет размещено представление (тип: HTMLElement)
-* eventEmitter - экземпляр класса EventEmitter, отвечающий за обмен событиями между компонентами (тип: EventEmitter)
 * payments - содержимое поля email (тип: String)
 * address - содержимое поля email (тип: String)
 
 Содержит следующие методы:
-* render - отвечает за отображение формы оформления заказа
+* payment - отвечает за отображение способа оплаты
 
 
-### 10. Класс Contacts
+### 10. Класс ContactsForm
 Класс Contacts наследуется от класса Component и отвечает за отображение контактной информации. Конструктор класса Contacts принимает следующие параметры:
 
-* contentElement - элемент DOM, в котором будет размещено представление (тип: HTMLElement)
-* eventEmitter - экземпляр класса EventEmitter, отвечающий за обмен событиями между компонентами (тип: EventEmitter)
 * phone - содержимое поля email (тип: String)
 * email - содержимое поля email (тип: String)
-
-Содержит следующие методы:
-* render - отвечает за отображение контактной информации
 
 
 ### 11. Класс Success
 Класс Success наследуется от класса Component и отвечает за отображение сообщения об успешном выполнении операции. Конструктор класса Success принимает следующие параметры:
 
-* contentElement - элемент DOM, в котором будет размещено представление (тип: HTMLElement)
-* eventEmitter - экземпляр класса EventEmitter, отвечающий за обмен событиями между компонентами (тип: EventEmitter)
-
 Содержит следующие методы:
-* render - отвечает за отображение сообщения
+* total - отвечает за отображение общей итоговой стоимости заказа
 
 ## Классы моделей
 
 ### 12. Класс AppData
 Класс AppData отвечает за работу с данными приложения. Конструктор класса AppData принимает следующие параметры:
 
-* catalog: Product[];
-* cart - содержание корзины
-* order - поля для заказа
-* selectedItem - текущий выбранный продукт
-* openedModal - тип открытого модального окна, перечислены в AppModals
-* isLoading - значение для отображения загрузки данных по APi
-* isError - значение если загрузка вернула ошибку
-
 Содержит следующие методы:
-* getProducts - возвращает список товаров
-* addProductToBasket - добавляет товар в корзину
-* removeProductFromBasket - удаляет товар из корзины
-* validateAddress - валидирует форму адреса
-* validateContacts - валидирует форму контактов
-* order - возвращает данные для заказа
+* setCatalog - устанавливает список продуктов
+* setPreview - устанавливает текущий выбранный продукт
+* isInBasket - проверяет наличие продукта в корзине
+* addToBasket - добавляет продукт в корзину
+* removeFromBasket - удаляет продукт из корзины
+* setOrderField - устанавливает значение в поле для заказа
+* setPayment - устанавливает способ оплаты
+* validateOrderForm - валидирует форму для оформления заказа
+* validateContactsForm - валидирует форму для контактной информации
+* sendOrder - отправляет заказ на сервер
+* clearBasket - очищает корзину
 
 
 ## Вспомогательные классы
@@ -217,13 +197,14 @@ yarn build
 Класс LarekApi наследуется от класса Api и добавляет специфические методы для работы магазина
 
 Содержит следующие методы:
-* getProducts(): Promise<Product[]> - получение списка товаров с сервера
-* sendOrder(formData: FormData): Promise<ApiResponse> - отправка заказа на сервер
+* getProducts - получение списка товаров с сервера
+* getProduct - Отправка заказа
+* sendOrder - отправка заказа на сервер
 
 
 ## Базовые типы
 '''typescript
-interface Product {
+interface IProduct {
 id: string;
 description: string;
 image: string;
@@ -232,40 +213,35 @@ category: string;
 price: number;
 }
 
-interface Cart {
-items: Product[];
+interface IBasket {
+items: string[];
+total: number;
 }
 
-interface Payments {
-payment: string;
+interface IPayments {
+payment: PaymentMethod;
 address: string;
 }
 
-interface Contacts {
+interface IContacts {
 email: string;
 phone: string;
 }
 
-interface Order extends Payments, Contacts {}
+interface IOrder extends IPayments, IContacts {}
 
-// Ключи для активации модельного окна
-export enum AppModals {
-item = 'modalitem',
-cart = 'modalcart',
-orderPayment = 'modalorderpayment',
-orderAddress = 'modalordersuccess',
-orderSuccess = 'modalordersuccess',
-}
-
-interface AppState {
-catalog: Product[];
-cart: Cart;
-order: Order;
+interface IAppState {
+catalog: IProduct[];
+cart: IBasket;
+order: IOrder;
 selectedItem?: string;
-openedModal: AppModals;
 isLoading: boolean;
 isError: boolean;
 }
+
+type PaymentMethod = 'cash' | 'card';
+
+type FormErrors = Partial<Record<keyof IOrder, string>>;
 
 interface ILarekApi {
 getProducts(): Promise<Product[]  | ResponseError>;

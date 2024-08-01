@@ -1,4 +1,4 @@
-export interface Product {
+export interface IProduct {
 	id: string;
 	description: string;
 	image: string;
@@ -7,37 +7,32 @@ export interface Product {
 	price: number;
 }
 
-export interface Cart {
-	items: Product[];
-	total: number; // total price of products
+export interface IBasket {
+	items: string[];
+	total: number;
 }
 
-interface Payments {
-	payment: string;
+interface IPayments {
+	payment: PaymentMethod;
 	address: string;
 }
 
-interface Contacts {
+interface IContacts {
 	email: string;
 	phone: string;
 }
 
-export interface Order extends Payments, Contacts {}
+export interface IOrder extends IPayments, IContacts {}
 
-export enum AppModals {
-	item = 'modalitem',
-	cart = 'modalcart',
-	orderPayment = 'modalorderpayment',
-	orderAddress = 'modalordersuccess',
-	orderSuccess = 'modalordersuccess',
-}
-
-export interface AppState {
-	catalog: Product[];
-	cart: Cart;
-	order: Order;
+export interface IAppState {
+	catalog: IProduct[];
+	cart: IBasket;
+	order: IOrder;
 	selectedItem?: string;
-	openedModal: AppModals;
 	isLoading: boolean;
 	isError: boolean;
 }
+
+export type PaymentMethod = 'cash' | 'card';
+
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
