@@ -10,7 +10,7 @@ interface IPage {
 
 export class Page extends Component<IPage> {
 	protected _counter: HTMLElement;
-	protected _catalog: HTMLElement;
+	protected _setCatalog: HTMLElement;
 	protected _wrapper: HTMLElement;
 	protected _basket: HTMLElement;
 
@@ -18,7 +18,7 @@ export class Page extends Component<IPage> {
 		super(container);
 
 		this._counter = ensureElement<HTMLElement>('.header__basket-counter');
-		this._catalog = ensureElement<HTMLElement>('.gallery');
+		this._setCatalog = ensureElement<HTMLElement>('.gallery');
 		this._wrapper = ensureElement<HTMLElement>('.page__wrapper');
 		this._basket = ensureElement<HTMLElement>('.header__basket');
 
@@ -28,17 +28,17 @@ export class Page extends Component<IPage> {
 	}
 
 	// отрисовка каталога
-	set catalog(items: HTMLElement[]) {
-		this._catalog.replaceChildren(...items);
+	set setCatalog(items: HTMLElement[]) {
+		this._setCatalog.replaceChildren(...items);
 	}
 
 	// блокировка каталога
-	set locked(value: boolean) {
+	set lockPage(value: boolean) {
 		this._wrapper.classList.toggle('page__wrapper_locked', value);
 	}
 
 	// количества продуктов в корзине
-	set basketCounter(value: number) {
+	set setBasketCounter(value: number) {
 		this.setText(this._counter, String(value));
 	}
 }

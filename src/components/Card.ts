@@ -38,16 +38,8 @@ export class Card extends Component<IProduct> {
 		this.container.dataset.id = value;
 	}
 
-	get id(): string {
-		return this.container.dataset.id || '';
-	}
-
 	set title(value: string) {
 		this.setText(this._title, value);
-	}
-
-	get title(): string {
-		return this._title.textContent || '';
 	}
 
 	set price(value: string) {
@@ -55,10 +47,6 @@ export class Card extends Component<IProduct> {
 		if (this._button) {
 			this._button.disabled = !value;
 		}
-	}
-
-	get price(): string {
-		return this._price.textContent || '';
 	}
 
 	set category(value: keyof typeof categories) {

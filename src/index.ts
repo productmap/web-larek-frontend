@@ -44,7 +44,7 @@ const success = new Success(cloneTemplate(successTemplate), {
 
 // Отрисовка каталога
 events.on('catalog:changed', (items: IProduct[]) => {
-	page.catalog = items.map((item) => {
+	page.setCatalog = items.map((item) => {
 		const card = new Card(cloneTemplate(cardCatalogTemplate), {
 			onClick: () => events.emit('card:select', item),
 		});
@@ -85,7 +85,7 @@ events.on('basket:open', () => {
 
 // Изменение карточки в корзине
 events.on('basket:changed', () => {
-	page.basketCounter = appState.basket.items.length;
+	page.setBasketCounter = appState.basket.items.length;
 	basket.items = appState.basket.items.map((id) => {
 		const item = appState.items.find((item) => item.id === id);
 		const card = new Card(cloneTemplate(cardBasketTemplate), {
@@ -169,12 +169,12 @@ events.on('contacts:submit', () => {
 
 // Блокируем прокрутку страницы если открыта модалка
 events.on('modal:open', () => {
-	page.locked = true;
+	page.lockPage = true;
 });
 
 // ... и разблокируем
 events.on('modal:close', () => {
-	page.locked = false;
+	page.lockPage = false;
 });
 
 // Получаем лоты с сервера

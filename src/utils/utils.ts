@@ -1,7 +1,3 @@
-export function pascalToKebab(value: string): string {
-	return value.replace(/([a-z0–9])([A-Z])/g, '$1-$2').toLowerCase();
-}
-
 export function isSelector(x: any): x is string {
 	return typeof x === 'string' && x.length > 1;
 }
@@ -56,21 +52,6 @@ export function cloneTemplate<T extends HTMLElement>(
 	const template = ensureElement(query) as HTMLTemplateElement;
 	return template.content.firstElementChild.cloneNode(true) as T;
 }
-
-export function bem(
-	block: string,
-	element?: string,
-	modifier?: string
-): { name: string; class: string } {
-	let name = block;
-	if (element) name += `__${element}`;
-	if (modifier) name += `_${modifier}`;
-	return {
-		name,
-		class: `.${name}`,
-	};
-}
-
 export function getObjectProperties(
 	obj: object,
 	filter?: (name: string, prop: PropertyDescriptor) => boolean
@@ -94,20 +75,6 @@ export function setElementData<T extends Record<string, unknown> | object>(
 	for (const key in data) {
 		el.dataset[key] = String(data[key]);
 	}
-}
-
-/**
- * Получает типизированные данные из dataset атрибутов элемента
- */
-export function getElementData<T extends Record<string, unknown>>(
-	el: HTMLElement,
-	scheme: Record<string, Function>
-): T {
-	const data: Partial<T> = {};
-	for (const key in el.dataset) {
-		data[key as keyof T] = scheme[key](el.dataset[key]);
-	}
-	return data as T;
 }
 
 /**
@@ -151,6 +118,3 @@ export function createElement<T extends HTMLElement>(
 	}
 	return element;
 }
-
-export const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export const TEL_REGEXP = /^\+?\d{1,3}[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}$/;
