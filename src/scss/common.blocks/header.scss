@@ -2,8 +2,10 @@
 @use "../mixins";
 
 .header {
+  & {
   height: $headerHeight;
   background-color: $primary;
+  }
 
   &__container {
     @include mixins.container(45px,45px);
@@ -26,12 +28,15 @@
   &__basket {
     //@include mixins.icon($headerElementsSize, 'basket-2');
     @include mixins.link($primary, $hover);
-    background-image: url(../../images/shopping_cart.svg);
-    height: 58px;
-    width: 58px;
-    border: none;
-    position: relative;
-    cursor: pointer;
+
+    & {
+      background-image: url(../../images/shopping_cart.svg);
+      height: 58px;
+      width: 58px;
+      border: none;
+      position: relative;
+      cursor: pointer;
+    }
 
     &-counter {
       position: absolute;
