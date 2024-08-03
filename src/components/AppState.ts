@@ -9,7 +9,7 @@ import {
 import { Model } from './base/Model';
 
 export class AppState extends Model<IAppState> {
-	items: IProduct[] = [];
+	catalog: IProduct[] = [];
 	preview: IProduct | null = null;
 	basket: IBasket = {
 		items: [],
@@ -26,8 +26,8 @@ export class AppState extends Model<IAppState> {
 	formErrors: FormErrors = {};
 
 	setCatalog(items: IProduct[]) {
-		this.items = items;
-		this.emitChanges('catalog:changed', this.items);
+		this.catalog = items;
+		this.emitChanges('catalog:changed', this.catalog);
 	}
 
 	setPreview(item: IProduct) {

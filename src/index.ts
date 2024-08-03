@@ -1,6 +1,6 @@
 import './scss/styles.scss';
 
-import { EventEmitter } from './components/base/events';
+import { EventEmitter } from './components/base/EventEmitter';
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { LarekApi } from './components/LarekApi';
@@ -87,7 +87,7 @@ events.on('basket:open', () => {
 events.on('basket:changed', () => {
 	page.setBasketCounter = appState.basket.items.length;
 	basket.items = appState.basket.items.map((id) => {
-		const item = appState.items.find((item) => item.id === id);
+		const item = appState.catalog.find((item) => item.id === id);
 		const card = new Card(cloneTemplate(cardBasketTemplate), {
 			onClick: () => appState.removeFromBasket(item),
 		});

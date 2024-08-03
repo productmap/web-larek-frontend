@@ -1,6 +1,6 @@
 import { Form } from './common/Form';
 import { ensureElement } from '../utils/utils';
-import { IEvents } from './base/events';
+import { IEvents } from './base/EventEmitter';
 
 type TContactsForm = {
 	email: string;

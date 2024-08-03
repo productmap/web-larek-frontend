@@ -1,6 +1,6 @@
 import { Component } from '../base/Component';
 import { createElement, ensureElement } from '../../utils/utils';
-import { EventEmitter } from '../base/events';
+import { EventEmitter } from '../base/EventEmitter';
 
 export class Basket extends Component<{
 	items: HTMLElement[];

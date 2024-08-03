@@ -1,5 +1,5 @@
 import { Form } from './common/Form';
-import { IEvents } from './base/events';
+import { IEvents } from './base/EventEmitter';
 import { ensureElement } from '../utils/utils';
 import { PaymentMethod } from '../types';
 
