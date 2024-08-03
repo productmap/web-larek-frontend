@@ -58,10 +58,6 @@ export class Card extends Component<IProduct> {
 		}
 	}
 
-	get category(): string {
-		return this._category.textContent || '';
-	}
-
 	set image(src: string) {
 		this.setImage(this._image, src, this.title);
 	}
