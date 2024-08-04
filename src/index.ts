@@ -77,7 +77,6 @@ events.on('card:changed', (item: IProduct) => {
 
 // Открытие корзины
 events.on('basket:open', () => {
-	basket.submitButtonLock = appState.basket.items;
 	modal.render({
 		content: basket.render(),
 	});

@@ -7,18 +7,21 @@ export class Basket extends Component<{
 	total: number;
 	selected: string[];
 }> {
-	protected _list: HTMLElement;
-	protected _total: HTMLElement;
-	protected _button: HTMLElement;
+	protected itemsContainer: HTMLElement;
+	protected totalElement: HTMLElement;
+	protected purchaseButton: HTMLElement;
 
 	constructor(container: HTMLElement, protected events: EventEmitter) {
 		super(container);
 
-		this._list = ensureElement<HTMLElement>('.basket__list', this.container);
-		this._total = this.container.querySelector('.basket__price');
-		this._button = this.container.querySelector('.basket__button');
+		this.itemsContainer = ensureElement<HTMLElement>(
+			'.basket__list',
+			this.container
+		);
+		this.totalElement = this.container.querySelector('.basket__price');
+		this.purchaseButton = this.container.querySelector('.basket__button');
 
-		this._button.addEventListener('click', () => {
+		this.purchaseButton.addEventListener('click', () => {
 			events.emit('order:open');
 		});
 
@@ -26,22 +29,31 @@ export class Basket extends Component<{
 	}
 
 	set items(items: HTMLElement[]) {
-		this._list.replaceChildren(
-			...(items.length
-				? items
-				: [
-						createElement<HTMLParagraphElement>('p', {
-							textContent: 'Корзина пуста',
-						}),
-				  ])
-		);
+		if (items.length) {
+			this.itemsContainer.replaceChildren(
+				...items.map((item, index) => {
+					const indexElement = item.querySelector('.basket__item-index');
+					indexElement.textContent = String(index + 1);
+					return item;
+				})
+			);
+		} else {
+			this.itemsContainer.replaceChildren(
+				...[
+					createElement<HTMLParagraphElement>('p', {
+						textContent: 'Корзина пуста',
+					}),
+				]
+			);
+		}
+		this.submitButtonLock(items.map((item) => item.dataset.id));
 	}
 
-	set submitButtonLock(items: string[]) {
-		this.setDisabled(this._button, !items.length);
+	protected submitButtonLock(items: string[]) {
+		this.setDisabled(this.purchaseButton, !items.length);
 	}
 
 	set total(total: number) {
-		this.setText(this._total, `${total} синапсов`);
+		this.setText(this.totalElement, `${total} синапсов`);
 	}
 }
