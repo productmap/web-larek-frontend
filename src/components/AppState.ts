@@ -1,11 +1,4 @@
-import {
-	FormErrors,
-	IAppState,
-	IBasket,
-	IOrder,
-	IProduct,
-	PaymentMethod,
-} from '../types';
+import { FormErrors, IAppState, IBasket, IOrder, IProduct, PaymentMethod } from '../types';
 import { Model } from './base/Model';
 
 export class AppState extends Model<IAppState> {
@@ -87,6 +80,16 @@ export class AppState extends Model<IAppState> {
 		this.events.emit('contactsFormErrors:change', this.formErrors);
 		return Object.keys(errors).length === 0;
 	}
+
+	// Вычисление общей стоимости корзины
+	calculateBasketTotal(): number {
+		return this.basket.items.reduce((total: number, itemId: string) => {
+			const product = this.catalog.find((product) => product.id === itemId);
+			return total + (product?.price || 0);
+		}, 0)
+	}
+
+
 
 	// Сброс состояния корзины
 	clearBasket() {

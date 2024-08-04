@@ -5,7 +5,6 @@ import { EventEmitter } from '../base/EventEmitter';
 export class Basket extends Component<{
 	items: HTMLElement[];
 	total: number;
-	selected: string[];
 }> {
 	protected itemsContainer: HTMLElement;
 	protected totalElement: HTMLElement;

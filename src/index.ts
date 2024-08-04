@@ -44,7 +44,7 @@ const success = new Success(cloneTemplate(successTemplate), {
 
 // Отрисовка каталога
 events.on('catalog:changed', (items: IProduct[]) => {
-	page.setCatalog = items.map((item) => {
+	page.catalog = items.map((item) => {
 		const card = new Card(cloneTemplate(cardCatalogTemplate), {
 			onClick: () => events.emit('card:select', item),
 		});
@@ -88,12 +88,17 @@ events.on('basket:changed', () => {
 	basket.items = appState.basket.items.map((id) => {
 		const item = appState.catalog.find((item) => item.id === id);
 		const card = new Card(cloneTemplate(cardBasketTemplate), {
-			onClick: () => appState.removeFromBasket(item),
+			onClick: () => events.emit('removeFromBasket', item),
 		});
 		return card.render(item);
 	});
 
-	basket.total = appState.basket.total;
+	basket.total = appState.calculateBasketTotal();
+});
+
+// Удаление карточки из корзины
+events.on('removeFromBasket', (item: IProduct) => {
+	appState.removeFromBasket(item);
 });
 
 // Открытие заказа
