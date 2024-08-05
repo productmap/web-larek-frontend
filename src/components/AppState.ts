@@ -1,4 +1,11 @@
-import { FormErrors, IAppState, IBasket, IOrder, IProduct, PaymentMethod } from '../types';
+import {
+	FormErrors,
+	IAppState,
+	IBasket,
+	IProduct,
+	PaymentMethod,
+	TOrder,
+} from '../types';
 import { Model } from './base/Model';
 
 export class AppState extends Model<IAppState> {
@@ -6,16 +13,16 @@ export class AppState extends Model<IAppState> {
 	preview: IProduct | null = null;
 	basket: IBasket = {
 		items: [],
-		total: 0,
 	};
 
-	order: IOrder = {
+	order: TOrder = {
 		payment: 'card',
 		address: '',
 		email: '',
 		phone: '',
 	};
 
+	total = 0;
 	formErrors: FormErrors = {};
 
 	setCatalog(items: IProduct[]) {
@@ -34,17 +41,17 @@ export class AppState extends Model<IAppState> {
 
 	addToBasket(item: IProduct) {
 		this.basket.items.push(item.id);
-		this.basket.total += item.price;
+		this.total += item.price;
 		this.events.emit('basket:changed', this.basket);
 	}
 
 	removeFromBasket(item: IProduct) {
 		this.basket.items = this.basket.items.filter((id) => id !== item.id);
-		this.basket.total -= item.price;
+		this.total -= item.price;
 		this.events.emit('basket:changed', this.basket);
 	}
 
-	setOrderField(field: keyof IOrder, value: string) {
+	setOrderField(field: keyof TOrder, value: string) {
 		if (field === 'payment') {
 			this.setPayment(value as PaymentMethod);
 		} else {
@@ -86,15 +93,13 @@ export class AppState extends Model<IAppState> {
 		return this.basket.items.reduce((total: number, itemId: string) => {
 			const product = this.catalog.find((product) => product.id === itemId);
 			return total + (product?.price || 0);
-		}, 0)
+		}, 0);
 	}
-
-
 
 	// Сброс состояния корзины
 	clearBasket() {
 		this.basket.items = [];
-		this.basket.total = 0;
+		this.total = 0;
 		this.events.emit('basket:changed', this.basket);
 	}
 }

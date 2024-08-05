@@ -9,7 +9,6 @@ export interface IProduct {
 
 export interface IBasket {
 	items: string[];
-	total: number;
 }
 
 interface IPayments {
@@ -22,15 +21,19 @@ interface IContacts {
 	phone: string;
 }
 
-export interface IOrder extends IPayments, IContacts {}
+export interface IOrder extends IPayments, IContacts {
+	total: number;
+}
+export type TOrder = IPayments & IContacts;
 
 export interface IAppState {
 	catalog: IProduct[];
-	cart: IBasket;
-	order: IOrder;
-	selectedItem?: string;
+	basket: IBasket;
+	order: TOrder;
+	preview: IProduct | null;
 	isLoading: boolean;
 	isError: boolean;
+	total: number;
 }
 
 export type PaymentMethod = 'cash' | 'card';

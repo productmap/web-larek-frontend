@@ -9,7 +9,7 @@ import { Page } from './components/Page';
 import { Basket } from './components/common/Basket';
 import { AppState } from './components/AppState';
 import { Card } from './components/Card';
-import { IOrder, IProduct } from './types';
+import { IOrder, IProduct, TOrder } from './types';
 import { OrderForm } from './components/OrderForm';
 import { Success } from './components/common/Success';
 import { ContactsForm } from './components/СontactsForm';
@@ -115,7 +115,7 @@ events.on('order:open', () => {
 // Обработка формы заказа
 events.on(
 	/^order\..*:change$/,
-	(data: { field: keyof IOrder; value: string }) => {
+	(data: { field: keyof TOrder; value: string }) => {
 		appState.setOrderField(data.field, data.value);
 		appState.validateOrderForm();
 	}
@@ -142,7 +142,7 @@ events.on('order:submit', () => {
 // Обработка формы контактов
 events.on(
 	/^contacts\..*:change$/,
-	(data: { field: keyof IOrder; value: string }) => {
+	(data: { field: keyof TOrder; value: string }) => {
 		appState.setOrderField(data.field, data.value);
 		appState.validateContactsForm();
 	}
@@ -159,7 +159,7 @@ events.on('contactsFormErrors:change', (error: Partial<IOrder>) => {
 // Отправка заказа
 events.on('contacts:submit', () => {
 	api
-		.sendOrder({ ...appState.order, ...appState.basket })
+		.sendOrder({ ...appState.order, ...appState.basket, total: appState.total })
 		.then((data: IOrderResult) => {
 			modal.render({
 				content: success.render(),
